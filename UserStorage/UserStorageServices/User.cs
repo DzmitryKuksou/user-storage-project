@@ -19,5 +19,6 @@
         /// Gets or sets a user age.
         /// </summary>
         public int Age { get; set; }
+        public System.Guid id = new System.Guid();
     }
 }
