@@ -2,6 +2,7 @@
 using System.Linq;
 using System.ServiceModel;
 using ServiceConfiguration = ServiceConfigurationSection.ServiceConfigurationSection;
+using UserStorageServices;
 
 namespace UserStorageApp
 {

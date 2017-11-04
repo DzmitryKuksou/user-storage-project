@@ -74,7 +74,7 @@ namespace UserStorageServices.Tests
         {
             // Arrange
             var userStorageService = new UserStorageService();
-            
+
             // Act
             userStorageService.Add(new User
             {
@@ -105,6 +105,7 @@ namespace UserStorageServices.Tests
         public void SearchByFirstName_User()
         {
             var userStorageService = new UserStorageService();
+
             var user = new User()
             {
                 FirstName = "Yan",
@@ -119,6 +120,7 @@ namespace UserStorageServices.Tests
         public void SearchByLastName_User()
         {
             var userStorageService = new UserStorageService();
+
             var user = new User()
             {
                 FirstName = "Yan",
@@ -133,6 +135,7 @@ namespace UserStorageServices.Tests
         public void SearchByAge_User()
         {
             var userStorageService = new UserStorageService();
+
             var user = new User()
             {
                 FirstName = "Yan",
@@ -148,6 +151,7 @@ namespace UserStorageServices.Tests
         public void SearchByAge_Exception()
         {
             var userStorageService = new UserStorageService();
+
             var user = new User()
             {
                 FirstName = "Yan",
@@ -163,6 +167,7 @@ namespace UserStorageServices.Tests
         public void SearchByName_Exception()
         {
             var userStorageService = new UserStorageService();
+
             var user = new User()
             {
                 LastName = "Big",
@@ -177,6 +182,7 @@ namespace UserStorageServices.Tests
         public void SearchByName_Exception2()
         {
             var userStorageService = new UserStorageService();
+
             var user = new User()
             {
                 FirstName = "Yan",

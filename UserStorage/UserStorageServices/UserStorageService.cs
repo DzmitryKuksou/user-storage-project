@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Diagnostics;
 
 namespace UserStorageServices
 {
@@ -9,6 +10,11 @@ namespace UserStorageServices
     /// </summary>
     public class UserStorageService
     {
+        /// <summary>
+        /// field validation
+        /// </summary>
+        private IValidation valid;
+
         /// <summary>
         /// new identification number
         /// </summary>
@@ -26,12 +32,14 @@ namespace UserStorageServices
         {
             users = new List<User>();
             newId = new UserId();
+            valid = new Validation();
         }
 
         /// <summary>
         /// field log
         /// </summary>
         public bool IsLoggingEnabled { get; set; }
+
 
         /// <summary>
         /// Gets the number of elements contained in the storage.
@@ -50,20 +58,7 @@ namespace UserStorageServices
                 Console.WriteLine("Add() method is called.");
             }
 
-            if (user == null)
-            {
-                throw new ArgumentNullException(nameof(user));
-            }
-
-            if (string.IsNullOrWhiteSpace(user.FirstName) || string.IsNullOrWhiteSpace(user.LastName)) 
-            {
-                throw new ArgumentException("FirstName is null or empty or whitespace", nameof(user));
-            }
-
-            if (user.Age <= 0)
-            {
-                throw new ArgumentException("Age less than zero", nameof(user));
-            }
+            valid.Validate(user);
 
             user.Id = newId.Generate();
 
@@ -73,29 +68,16 @@ namespace UserStorageServices
         /// <summary>
         /// Removes an existed <see cref="User"/> from the storage.
         /// </summary>
-        public void Remove(User user)
+        public bool Remove(User user)
         {
             if (IsLoggingEnabled)
             {
                 Console.WriteLine("Remove() method is called.");
             }
 
-            if (user == null)
-            {
-                throw new ArgumentNullException(nameof(user));
-            }
+            valid.Validate(user);
 
-            if (string.IsNullOrWhiteSpace(user.FirstName) || string.IsNullOrWhiteSpace(user.LastName))
-            {
-                throw new ArgumentException("FirstName is null or empty, or whitespace", nameof(user));
-            }
-
-            if (user.Age <= 0)
-            {
-                throw new ArgumentException("Age less than zero", nameof(user));
-            }
-
-            users.Remove(user);
+            return users.Remove(user);
         }
 
         /// <summary>
@@ -110,10 +92,7 @@ namespace UserStorageServices
                 Console.WriteLine("SearchByFirstName() method is called.");
             }
 
-            if (string.IsNullOrWhiteSpace(firstName))
-            {
-                throw new ArgumentException("FirstName is null or empty, or whitespace", nameof(firstName));
-            }
+            valid.Validate(firstName);
 
             return SearchByPredicate(u => u.FirstName == firstName);
         }
@@ -130,10 +109,7 @@ namespace UserStorageServices
                 Console.WriteLine("SearchByLastName() method is called.");
             }
 
-            if (string.IsNullOrWhiteSpace(lastName))
-            {
-                throw new ArgumentException("FirstName is null or empty, or whitespace", nameof(lastName));
-            }
+            valid.Validate(lastName);
 
             return SearchByPredicate(u => u.LastName == lastName);
         }
@@ -150,10 +126,7 @@ namespace UserStorageServices
                 Console.WriteLine("SearchByAge() method is called.");
             }
 
-            if (age <= 0)
-            {
-                throw new ArgumentException("FirstName is null or empty, or whitespace", nameof(age));
-            }
+            valid.Validate(age);
 
             return SearchByPredicate(u => u.Age == age);
         }
