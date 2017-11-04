@@ -40,7 +40,6 @@ namespace UserStorageServices
             this.valid = valid;
         }
 
-
         /// <summary>
         /// Gets the number of elements contained in the storage.
         /// </summary>
