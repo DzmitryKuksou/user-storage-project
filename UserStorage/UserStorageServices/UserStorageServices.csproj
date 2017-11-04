@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IUserStorageService.cs" />
     <Compile Include="IValidation.cs" />
     <Compile Include="UserId.cs" />
     <Compile Include="IGeneratorId.cs" />

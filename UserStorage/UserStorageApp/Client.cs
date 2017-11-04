@@ -7,14 +7,14 @@ namespace UserStorageApp
     /// </summary>
     public class Client
     {
-        private readonly UserStorageService _userStorageService;
+        private readonly IUserStorageService _userStorageService;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Client"/> class.
         /// </summary>
-        public Client()
+        public Client(IUserStorageService _userStorageService)
         {
-            _userStorageService = new UserStorageService();
+            this._userStorageService = _userStorageService;
         }
 
         /// <summary>
