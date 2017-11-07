@@ -6,12 +6,9 @@ using System.Threading.Tasks;
 
 namespace UserStorageServices
 {
-    public interface IValidation
+    public interface IValidator
     {
         void Validate(User user);
 
-        void Validate(int age);
-
-        void Validate(string name);
     }
 }

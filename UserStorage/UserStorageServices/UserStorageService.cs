@@ -13,7 +13,7 @@ namespace UserStorageServices
         /// <summary>
         /// field validation
         /// </summary>
-        private IValidation valid;
+        private IValidator valid;
 
         /// <summary>
         /// new identification number
@@ -33,7 +33,7 @@ namespace UserStorageServices
         /// <summary>
         /// c-or
         /// </summary>
-        public UserStorageService(IGeneratorId newId, IValidation valid)
+        public UserStorageService(IGeneratorId newId, IValidator valid)
         {
             users = new List<User>();
             this.newId = newId;
@@ -91,8 +91,6 @@ namespace UserStorageServices
                 Console.WriteLine("SearchByFirstName() method is called.");
             }
 
-            valid.Validate(firstName);
-
             return SearchByPredicate(u => u.FirstName == firstName);
         }
 
@@ -108,8 +106,6 @@ namespace UserStorageServices
                 Console.WriteLine("SearchByLastName() method is called.");
             }
 
-            valid.Validate(lastName);
-
             return SearchByPredicate(u => u.LastName == lastName);
         }
 
@@ -124,8 +120,6 @@ namespace UserStorageServices
             {
                 Console.WriteLine("SearchByAge() method is called.");
             }
-
-            valid.Validate(age);
 
             return SearchByPredicate(u => u.Age == age);
         }
