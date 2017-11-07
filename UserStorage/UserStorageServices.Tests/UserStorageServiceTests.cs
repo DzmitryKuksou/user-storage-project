@@ -62,6 +62,7 @@ namespace UserStorageServices.Tests
             // Arrange
             var userStorageService = new UserStorageService(new UserId(), new CompositeValidator());
             var storageLog = new UserStorageServiceLog(userStorageService);
+
             // Act
             storageLog.Add(null);
 
@@ -75,6 +76,7 @@ namespace UserStorageServices.Tests
             // Arrange
             var userStorageService = new UserStorageService(new UserId(), new CompositeValidator());
             var storageLog = new UserStorageServiceLog(userStorageService);
+
             // Act
             storageLog.Add(new User
             {
@@ -191,6 +193,7 @@ namespace UserStorageServices.Tests
             storageLog.Add(user);
             Assert.AreEqual(storageLog.SearchByAge(user.Age).FirstOrDefault(), user);
         }
+
         [TestMethod]
         public void SearchByNameAndAge()
         {

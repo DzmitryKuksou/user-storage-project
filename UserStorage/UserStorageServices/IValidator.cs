@@ -9,6 +9,5 @@ namespace UserStorageServices
     public interface IValidator
     {
         void Validate(User user);
-
     }
 }
