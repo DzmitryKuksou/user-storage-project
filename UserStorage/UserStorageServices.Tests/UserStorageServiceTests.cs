@@ -191,5 +191,25 @@ namespace UserStorageServices.Tests
             userStorageService.Add(user);
             Assert.AreEqual(userStorageService.SearchByAge(user.Age).FirstOrDefault(), user);
         }
+        [TestMethod]
+        public void SearchByNameAndAge()
+        {
+            var user = new User()
+            {
+                FirstName = "Yan",
+                LastName = "Big",
+                Age = 20
+            };
+            var user1 = new User()
+            {
+                FirstName = "Yan",
+                LastName = "Little",
+                Age = 30
+            };
+            var userStorageService = new UserStorageService(new UserId(), new CompositeValidator());
+            userStorageService.Add(user);
+            userStorageService.Add(user1);
+            Assert.AreEqual(userStorageService.SearchByPredicate(u => u.FirstName == "Yan" && u.Age == 30).FirstOrDefault(), user1);
+        }
     }
 }
