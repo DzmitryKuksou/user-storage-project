@@ -25,12 +25,11 @@ namespace UserStorageServices
             {
                 throw new NotSupportedException();
             }
-
         }
 
         public override bool Remove(User user)
         {
-            if (IsMaster())
+            if (this.IsMaster())
             {
                 return base.Remove(user);
             }

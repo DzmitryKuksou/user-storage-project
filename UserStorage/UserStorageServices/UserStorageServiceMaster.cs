@@ -6,17 +6,22 @@ using System.Threading.Tasks;
 
 namespace UserStorageServices
 {
-    public class UserStorageServiceMaster:UserStorageServiceBase
+    public class UserStorageServiceMaster : UserStorageServiceBase
     {
         private readonly IEnumerable<IUserStorageService> slaveService;
+
         private readonly HashSet<INotificationSubscriber> subscribers;
+
         private event Action<User> AddedToStorage;
+
         private event Action<User> RemovedFromStorage;
+
         public UserStorageServiceMaster(IGeneratorId generatorId, IValidator valid, IEnumerable<IUserStorageService> slaveService = null) : base(generatorId, valid)
         {
             this.slaveService = slaveService?.ToList() ?? new List<IUserStorageService>();
             subscribers = new HashSet<INotificationSubscriber>();
         }
+
         public override UserStorageServiceMode ServiceMode => UserStorageServiceMode.MasterNode;
 
         public override void Add(User user)
@@ -57,6 +62,7 @@ namespace UserStorageServices
 
             subscribers.Remove(subscriber);
         }
+
         private void OnUserAdded(User user)
         {
             AddedToStorage?.Invoke(user);

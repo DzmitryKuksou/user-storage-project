@@ -14,6 +14,7 @@ namespace UserStorageServices
         }
 
         private readonly BooleanSwitch logging = new BooleanSwitch("Enable logging", "managed from app.config");
+
         public override int Count
         {
             get
