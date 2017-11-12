@@ -27,6 +27,8 @@ namespace UserStorageServices
             }
         }
 
+        public override UserStorageServiceMode ServiceMode => ServiceMode;
+
         public override void Add(User user)
         {
             if (logging.Enabled)

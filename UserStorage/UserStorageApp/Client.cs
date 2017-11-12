@@ -3,7 +3,7 @@
 namespace UserStorageApp
 {
     /// <summary>
-    /// Represents a client that uses an instance of the <see cref="UserStorageService"/>.
+    /// Represents a client that uses an instance of the <see cref="UserStorageServiceBase"/>.
     /// </summary>
     public class Client
     {
@@ -18,7 +18,7 @@ namespace UserStorageApp
         }
 
         /// <summary>
-        /// Runs a sequence of actions on an instance of the <see cref="UserStorageService"/> class.
+        /// Runs a sequence of actions on an instance of the <see cref="UserStorageServiceBase"/> class.
         /// </summary>
         public void Run()
         {
