@@ -8,8 +8,13 @@ namespace UserStorageServices
     /// <summary>
     /// Represents a service that stores a set of <see cref="User"/>s and allows to search through them.
     /// </summary>
-    public class UserStorageService : IUserStorageService
+    public class UserStorageService : IUserStorageService, INotificationSubscriber
     {
+        /// <summary>
+        /// subscribers
+        /// </summary>
+        private HashSet<INotificationSubscriber> subscribers;
+
         /// <summary>
         /// field validation
         /// </summary>
@@ -51,6 +56,7 @@ namespace UserStorageServices
             {
                 slaveService = services.ToList();
             }
+            subscribers = new HashSet<INotificationSubscriber>();
             this.newId = newId;
             this.valid = valid;
         }
@@ -182,6 +188,30 @@ namespace UserStorageServices
             var choossingUsers = users.Where(u => predicate(u));
 
             return choossingUsers;
+        }
+
+        public void UserAdded(User user)
+        {
+            Add(user);
+        }
+
+        public void UserRemoved(User user)
+        {
+            Remove(user);
+        }
+
+        public void RemoveSubscriber(INotificationSubscriber subscriber)
+        {
+            if (subscriber == null) throw new ArgumentNullException(nameof(subscriber));
+ 
+            subscribers.Remove(subscriber);
+        }
+
+        public void AddSubscriber(INotificationSubscriber subscriber)
+        {
+            if (subscriber == null) throw new ArgumentNullException(nameof(subscriber));
+
+            subscribers.Add(subscriber);
         }
 
         private bool IsMaster()
