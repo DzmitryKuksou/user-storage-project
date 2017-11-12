@@ -19,7 +19,7 @@ namespace UserStorageApp
             {
                 host.SmartOpen();
 
-                var userStorage = new UserStorageService(new UserId(), new CompositeValidator());
+                var userStorage = new UserStorageService(new UserId(), new CompositeValidator(), UserStorageServiceMode.MasterNode);
                 var storage = new UserStorageServiceLog(userStorage);
                 var client = new Client(userStorage);
 

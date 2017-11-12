@@ -26,7 +26,7 @@ namespace UserStorageServices
         {
             if (user == null)
             {
-                throw new ArgumentNullException("User is null." ,nameof(user));
+                throw new ArgumentNullException("User is null." , nameof(user));
             }
 
             foreach (var item in _validators)

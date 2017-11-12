@@ -26,6 +26,16 @@ namespace UserStorageServices
         private List<User> users;
 
         /// <summary>
+        /// mode
+        /// </summary>
+        private readonly UserStorageServiceMode mode;
+
+        /// <summary>
+        /// slave node
+        /// </summary>
+        private readonly IList<IUserStorageService> slaveService;
+
+        /// <summary>
         /// field log
         /// </summary>
         private readonly BooleanSwitch logging = new BooleanSwitch("enable for logging", "managed from app.config");
@@ -33,9 +43,14 @@ namespace UserStorageServices
         /// <summary>
         /// c-or
         /// </summary>
-        public UserStorageService(IGeneratorId newId, IValidator valid)
+        public UserStorageService(IGeneratorId newId, IValidator valid, UserStorageServiceMode mode, IEnumerable<IUserStorageService> services = null)
         {
             users = new List<User>();
+            this.mode = mode;
+            if (services != null)
+            {
+                slaveService = services.ToList();
+            }
             this.newId = newId;
             this.valid = valid;
         }
@@ -57,11 +72,21 @@ namespace UserStorageServices
                 Console.WriteLine("Add() method is called.");
             }
 
-            valid.Validate(user);
-
-            user.Id = newId.Generate();
-
-            users.Add(user);
+            if (IsMaster())
+            {
+                valid.Validate(user);
+                user.Id = newId.Generate();              
+                users.Add(user);
+                if (slaveService == null) return;
+                foreach (var item in slaveService)
+                {
+                    item.Add(user);
+                }
+            }
+            else
+            {
+                throw new NotSupportedException();
+            }
         }
 
         /// <summary>
@@ -69,14 +94,27 @@ namespace UserStorageServices
         /// </summary>
         public bool Remove(User user)
         {
+
             if (logging.Enabled)
             {
                 Console.WriteLine("Remove() method is called.");
             }
 
-            valid.Validate(user);
-
-            return users.Remove(user);
+            if (IsMaster())
+            {
+                valid.Validate(user);
+                user.Id = newId.Generate();
+                if (slaveService == null) return false;
+                foreach (var item in slaveService)
+                {
+                    item.Remove(user);
+                }
+                return users.Remove(user);
+            }
+            else
+            {
+                throw new NotSupportedException();
+            }
         }
 
         /// <summary>
@@ -144,6 +182,24 @@ namespace UserStorageServices
             var choossingUsers = users.Where(u => predicate(u));
 
             return choossingUsers;
+        }
+
+        private bool IsMaster()
+        {
+            var stackTrace = new StackTrace();
+            var current= stackTrace.GetFrame(1).GetMethod();
+            var frames = stackTrace.GetFrames();
+            int flag;
+            if (frames == null)
+            {
+                throw new InvalidOperationException();
+            }
+            else
+            {
+                flag = frames.Select(x => x.GetMethod()).Count(x => x == current);
+            }
+
+            return mode == UserStorageServiceMode.MasterNode || flag >= 2;
         }
     }
 }

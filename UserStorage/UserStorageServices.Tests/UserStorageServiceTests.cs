@@ -12,7 +12,7 @@ namespace UserStorageServices.Tests
         public void Add_UserFirstNameConsistsOfWhiteSpaces_ExceptionThrown()
         {
             //// Arrange
-            var userStorageService = new UserStorageService(new UserId(), new CompositeValidator());
+            var userStorageService = new UserStorageService(new UserId(), new CompositeValidator(), UserStorageServiceMode.MasterNode);
             var storageLog = new UserStorageServiceLog(userStorageService);
             //// Act
             storageLog.Add(new User
@@ -26,7 +26,7 @@ namespace UserStorageServices.Tests
         public void Add_UserLastNameConsistsOfWhiteSpaces_ExceptionThrown()
         {
             //// Arrange
-            var userStorageService = new UserStorageService(new UserId(), new CompositeValidator());
+            var userStorageService = new UserStorageService(new UserId(), new CompositeValidator(), UserStorageServiceMode.MasterNode);
             var storageLog = new UserStorageServiceLog(userStorageService);
             //// Act
             storageLog.Add(new User
@@ -42,7 +42,7 @@ namespace UserStorageServices.Tests
         public void Add_UserAgeIsNegative_ExceptionThrown()
         {
             //// Arrange
-            var userStorageService = new UserStorageService(new UserId(), new CompositeValidator());
+            var userStorageService = new UserStorageService(new UserId(), new CompositeValidator(), UserStorageServiceMode.MasterNode);
             var storageLog = new UserStorageServiceLog(userStorageService);
             ////Act
             storageLog.Add(new User
@@ -60,7 +60,7 @@ namespace UserStorageServices.Tests
         public void Add_NullAsUserArgument_ExceptionThrown()
         {
             // Arrange
-            var userStorageService = new UserStorageService(new UserId(), new CompositeValidator());
+            var userStorageService = new UserStorageService(new UserId(), new CompositeValidator(), UserStorageServiceMode.MasterNode);
             var storageLog = new UserStorageServiceLog(userStorageService);
 
             // Act
@@ -74,7 +74,7 @@ namespace UserStorageServices.Tests
         public void Add_UserFirstNameIsNull_ExceptionThrown()
         {
             // Arrange
-            var userStorageService = new UserStorageService(new UserId(), new CompositeValidator());
+            var userStorageService = new UserStorageService(new UserId(), new CompositeValidator(), UserStorageServiceMode.MasterNode);
             var storageLog = new UserStorageServiceLog(userStorageService);
 
             // Act
@@ -90,7 +90,7 @@ namespace UserStorageServices.Tests
         public void Remove_WithoutArguments_NothingHappen()
         {
             // Arrange
-            var userStorageService = new UserStorageService(new UserId(), new CompositeValidator());
+            var userStorageService = new UserStorageService(new UserId(), new CompositeValidator(), UserStorageServiceMode.MasterNode);
             var storageLog = new UserStorageServiceLog(userStorageService);
             // Act
             storageLog.Add(new User
@@ -106,7 +106,7 @@ namespace UserStorageServices.Tests
         [TestMethod]
         public void SearchByFirstName_User()
         {
-            var userStorageService = new UserStorageService(new UserId(), new CompositeValidator());
+            var userStorageService = new UserStorageService(new UserId(), new CompositeValidator(), UserStorageServiceMode.MasterNode);
             var storageLog = new UserStorageServiceLog(userStorageService);
             var user = new User()
             {
@@ -121,7 +121,7 @@ namespace UserStorageServices.Tests
         [TestMethod]
         public void SearchByLastName_User()
         {
-            var userStorageService = new UserStorageService(new UserId(), new CompositeValidator());
+            var userStorageService = new UserStorageService(new UserId(), new CompositeValidator(), UserStorageServiceMode.MasterNode);
             var storageLog = new UserStorageServiceLog(userStorageService);
             var user = new User()
             {
@@ -136,7 +136,7 @@ namespace UserStorageServices.Tests
         [TestMethod]
         public void SearchByAge_User()
         {
-            var userStorageService = new UserStorageService(new UserId(), new CompositeValidator());
+            var userStorageService = new UserStorageService(new UserId(), new CompositeValidator(), UserStorageServiceMode.MasterNode);
             var storageLog = new UserStorageServiceLog(userStorageService);
             var user = new User()
             {
@@ -152,7 +152,7 @@ namespace UserStorageServices.Tests
         [ExpectedException(typeof(ArgumentException))]
         public void SearchByAge_Exception()
         {
-            var userStorageService = new UserStorageService(new UserId(), new CompositeValidator());
+            var userStorageService = new UserStorageService(new UserId(), new CompositeValidator(), UserStorageServiceMode.MasterNode);
             var storageLog = new UserStorageServiceLog(userStorageService);
             var user = new User()
             {
@@ -168,7 +168,7 @@ namespace UserStorageServices.Tests
         [ExpectedException(typeof(ArgumentException))]
         public void SearchByName_Exception()
         {
-            var userStorageService = new UserStorageService(new UserId(), new CompositeValidator());
+            var userStorageService = new UserStorageService(new UserId(), new CompositeValidator(), UserStorageServiceMode.MasterNode);
             var storageLog = new UserStorageServiceLog(userStorageService);
             var user = new User()
             {
@@ -183,7 +183,7 @@ namespace UserStorageServices.Tests
         [ExpectedException(typeof(ArgumentException))]
         public void SearchByName_Exception2()
         {
-            var userStorageService = new UserStorageService(new UserId(), new CompositeValidator());
+            var userStorageService = new UserStorageService(new UserId(), new CompositeValidator(), UserStorageServiceMode.MasterNode);
             var storageLog = new UserStorageServiceLog(userStorageService);
             var user = new User()
             {
@@ -209,7 +209,7 @@ namespace UserStorageServices.Tests
                 LastName = "Little",
                 Age = 30
             };
-            var userStorageService = new UserStorageService(new UserId(), new CompositeValidator());
+            var userStorageService = new UserStorageService(new UserId(), new CompositeValidator(), UserStorageServiceMode.MasterNode);
             var storageLog = new UserStorageServiceLog(userStorageService);
             storageLog.Add(user);
             storageLog.Add(user1);
