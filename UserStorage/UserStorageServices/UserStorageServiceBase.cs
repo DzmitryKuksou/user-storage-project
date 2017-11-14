@@ -10,7 +10,10 @@ namespace UserStorageServices
     /// </summary>
     public abstract class UserStorageServiceBase : IUserStorageService, INotificationSubscriber
     {
-
+        /// <summary>
+        /// repository
+        /// </summary>
+        private readonly IUserRepository userRepository;
         /// <summary>
         /// field validation
         /// </summary>

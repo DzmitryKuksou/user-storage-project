@@ -37,12 +37,12 @@ namespace UserStorageServices
             throw new NotSupportedException();
         }
 
-        public void UserAdded(User user)
+        public override void UserAdded(User user)
         {
             Add(user);
         }
 
-        public void UserRemoved(User user)
+        public override void UserRemoved(User user)
         {
             Remove(user);
         }
