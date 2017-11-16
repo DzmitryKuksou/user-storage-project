@@ -15,9 +15,11 @@ namespace UserStorageServices
         private event Action<User> AddedToStorage;
 
         private event Action<User> RemovedFromStorage;
+        private readonly IValidator valid;
 
-        public UserStorageServiceMaster(IGeneratorId generatorId, IValidator valid, IEnumerable<IUserStorageService> slaveService = null) : base(generatorId, valid)
+        public UserStorageServiceMaster(IValidator valid, IUserRepository repository, IEnumerable<IUserStorageService> services = null) : base(repository)
         {
+            this.valid = valid;
             this.slaveService = slaveService?.ToList() ?? new List<IUserStorageService>();
             subscribers = new HashSet<INotificationSubscriber>();
         }

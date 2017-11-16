@@ -9,7 +9,7 @@ namespace UserStorageServices
 {
     public class UserStorageServiceSlave : UserStorageServiceBase, INotificationSubscriber
     {
-        public UserStorageServiceSlave(IGeneratorId generator, IValidator validator) : base(generator, validator)
+        public UserStorageServiceSlave(IUserRepository repos) : base(repos)
         {
         }
 

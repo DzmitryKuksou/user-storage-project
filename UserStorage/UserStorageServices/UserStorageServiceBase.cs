@@ -14,30 +14,13 @@ namespace UserStorageServices
         /// repository
         /// </summary>
         private readonly IUserRepository userRepository;
-        /// <summary>
-        /// field validation
-        /// </summary>
-        private IValidator valid;
-
-        /// <summary>
-        /// new identification number
-        /// </summary>
-        private IGeneratorId newId;
-
-        /// <summary>
-        /// list of users
-        /// </summary>
-        private List<User> users;
 
         /// <summary>
         /// c-or
         /// </summary>
-        
-        public UserStorageServiceBase(IGeneratorId newId, IValidator valid)
+        protected UserStorageServiceBase(IUserRepository userRepository)
         {
-            users = new List<User>();
-            this.newId = newId;
-            this.valid = valid;
+
         }
 
         public abstract UserStorageServiceMode ServiceMode { get; }
@@ -46,7 +29,7 @@ namespace UserStorageServices
         /// Gets the number of elements contained in the storage.
         /// </summary>
         /// <returns>An amount of users in the storage.</returns>
-        public int Count => users.Count;
+        public int Count => userRepository.Count;
 
         /// <summary>
         /// Adds a new <see cref="User"/> to the storage.
@@ -54,9 +37,7 @@ namespace UserStorageServices
         /// <param name="user">A new <see cref="User"/> that will be added to the storage.</param>
         public virtual void Add(User user)
         {
-            valid.Validate(user);
-            user.Id = newId.Generate();
-            users.Add(user);
+            userRepository.Set(user);
         }
 
         /// <summary>
@@ -64,9 +45,7 @@ namespace UserStorageServices
         /// </summary>
         public virtual bool Remove(User user)
         {
-            valid.Validate(user);
-            user.Id = newId.Generate();
-            return users.Remove(user);
+            return userRepository.Delete(user);
         }
 
         /// <summary>
@@ -108,12 +87,12 @@ namespace UserStorageServices
         {
             if (predicate == null)
             {
-                throw new ArgumentNullException(nameof(predicate));
+                throw new ArgumentNullException();
             }
 
-            var choossingUsers = users.Where(u => predicate(u));
+            var current = userRepository.Query(predicate);
 
-            return choossingUsers;
+            return current;
         }
 
         public virtual void UserAdded(User user)

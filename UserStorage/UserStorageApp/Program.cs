@@ -20,11 +20,12 @@ namespace UserStorageApp
             {
                 host.SmartOpen();
 
-                var slaveNode1 = new UserStorageServiceSlave(new UserId(), new CompositeValidator());
-                var slaveNode2 = new UserStorageServiceSlave(new UserId(), new CompositeValidator());
+                var newId = new UserId();
+                var slaveNode1 = new UserStorageServiceSlave(new UserMemoryCache(newId));
+                var slaveNode2 = new UserStorageServiceSlave(new UserMemoryCache(newId));
                 var slaveServiceCollection = new List<IUserStorageService>() { slaveNode1, slaveNode2 };
 
-                var storage = new UserStorageServiceMaster(new UserId(), new CompositeValidator(), slaveServiceCollection);
+                var storage = new UserStorageServiceMaster(new CompositeValidator(), new UserMemoryCache(newId), slaveServiceCollection);
                 var storageLog = new UserStorageServiceLog(storage);
                 var client = new Client(storageLog);
 
