@@ -1,4 +1,5 @@
-﻿using UserStorageServices;
+﻿using System.Configuration;
+using UserStorageServices;
 
 namespace UserStorageApp
 {
@@ -14,7 +15,8 @@ namespace UserStorageApp
         /// </summary>
         public Client(IUserStorageService userStorageService = null, IUserRepository repository = null)
         {
-            this.repository = repository ?? new UserMemoryCacheWithState();
+            var filePath = ConfigurationManager.AppSettings["FilePath"];
+            this.repository = repository ?? new UserMemoryCacheWithState(filePath);
             _userStorageService = userStorageService ?? new UserStorageServiceLog(new UserStorageServiceMaster(repository));
         }
 
