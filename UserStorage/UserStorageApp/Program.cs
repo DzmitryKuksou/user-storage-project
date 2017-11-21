@@ -25,7 +25,7 @@ namespace UserStorageApp
                 var slaveNode2 = new UserStorageServiceSlave(new UserMemoryCache(newId));
                 var slaveServiceCollection = new List<IUserStorageService>() { slaveNode1, slaveNode2 };
 
-                var storage = new UserStorageServiceMaster(new CompositeValidator(), new UserMemoryCache(newId), slaveServiceCollection);
+                var storage = new UserStorageServiceMaster(new UserMemoryCache(newId), services: slaveServiceCollection);
                 var storageLog = new UserStorageServiceLog(storage);
                 var client = new Client(storageLog);
 

@@ -7,14 +7,15 @@ namespace UserStorageApp
     /// </summary>
     public class Client
     {
-        private readonly IUserStorageService _userStorageService;
-
+        private IUserStorageService _userStorageService;
+        private IUserRepository repository;
         /// <summary>
         /// Initializes a new instance of the <see cref="Client"/> class.
         /// </summary>
-        public Client(IUserStorageService _userStorageService)
+        public Client(IUserStorageService userStorageService = null, IUserRepository repository = null)
         {
-            this._userStorageService = _userStorageService;
+            this.repository = repository ?? new UserMemoryCacheWithState();
+            _userStorageService = userStorageService ?? new UserStorageServiceLog(new UserStorageServiceMaster(repository));
         }
 
         /// <summary>
@@ -22,15 +23,17 @@ namespace UserStorageApp
         /// </summary>
         public void Run()
         {
+
+
+            repository.Start();
+
             _userStorageService.Add(new User
             {
                 FirstName = "Alex",
                 LastName = "Black",
                 Age = 25
             });
-
-////            _userStorageService.Remove();
-////          _userStorageService.Search();
+            repository.Stop();
         }
     }
 }

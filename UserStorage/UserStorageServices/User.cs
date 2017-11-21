@@ -5,6 +5,7 @@ namespace UserStorageServices
     /// <summary>
     /// Represents a user.
     /// </summary>
+    [Serializable]
     public class User
     {
         /// <summary>
@@ -26,5 +27,37 @@ namespace UserStorageServices
         /// Gets or sets a user age.
         /// </summary>
         public int Age { get; set; }
+        public static bool operator ==(User lhs, User rhs)
+        {
+            if (lhs == null || rhs == null)
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(lhs, rhs))
+            {
+                return true;
+            }
+
+            return lhs.Id == rhs.Id
+                   && lhs.FirstName == rhs.FirstName
+                   && lhs.LastName == rhs.LastName
+                   && lhs.Age == rhs.Age;
+        }
+
+        public static bool operator !=(User lhs, User rhs)
+        {
+            return !(lhs == rhs);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (!(obj is User))
+            {
+                return false;
+            }
+
+            return (User)obj == this;
+        }
     }
 }

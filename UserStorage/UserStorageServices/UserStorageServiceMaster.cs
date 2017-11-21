@@ -17,9 +17,10 @@ namespace UserStorageServices
         private event Action<User> RemovedFromStorage;
         private readonly IValidator valid;
 
-        public UserStorageServiceMaster(IValidator valid, IUserRepository repository, IEnumerable<IUserStorageService> services = null) : base(repository)
+
+        public UserStorageServiceMaster(IUserRepository repository, IValidator valid = null, IEnumerable<IUserStorageService> services = null) : base(repository)
         {
-            this.valid = valid;
+            this.valid = valid??new CompositeValidator();
             this.slaveService = slaveService?.ToList() ?? new List<IUserStorageService>();
             subscribers = new HashSet<INotificationSubscriber>();
         }
@@ -42,7 +43,7 @@ namespace UserStorageServices
 
         public override bool Remove(User user)
         {
-
+            valid.Validate(user);
             foreach (var item in subscribers)
             {
                 item.UserRemoved(user);
