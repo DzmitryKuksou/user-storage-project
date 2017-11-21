@@ -28,6 +28,8 @@ namespace UserStorageServices
 
         public override void Add(User user)
         {
+            valid.Validate(user);
+
             base.Add(user);
 
             OnUserAdded(user);

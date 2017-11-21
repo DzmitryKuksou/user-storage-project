@@ -20,7 +20,7 @@ namespace UserStorageServices
         /// </summary>
         protected UserStorageServiceBase(IUserRepository userRepository)
         {
-
+            this.userRepository = userRepository;
         }
 
         public abstract UserStorageServiceMode ServiceMode { get; }
